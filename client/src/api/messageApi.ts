@@ -41,3 +41,16 @@ export const editMyMessage = async (id: number, text: string, token: string) => 
     });
     return response.data;
 };
+
+export const uploadImage = async (senderId: string, receiverId: string, formData: FormData, token: string) => {
+    formData.append('senderId', senderId);
+    formData.append('receiverId', receiverId);
+    formData.append('text', '');
+    const response = await axios.post(`${API_MESSAGES_URL}/upload`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`
+        }
+    });
+    return response.data;
+};
