@@ -34,7 +34,9 @@ const MessageMy: React.FC<IMessageMyProps> = ({message, setEditMessage, currRoom
                     <div className="flex items-center flex-row-reverse group">
                         {imagePaths
                             ?
-                            <img src={`${BASE_URL}/${imagePaths}`} className="w-36" alt=""/>
+                            imagePaths.map((img) => (
+                                <img src={`${BASE_URL}/${img}`} className="w-36" alt=""/>
+                            ))
                             :
                             <p className="rounded-t-full rounded-l-full bg-blue-700 px-6 py-3 max-w-xs lg:max-w-md">
                                 {text}

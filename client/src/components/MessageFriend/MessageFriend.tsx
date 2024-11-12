@@ -23,7 +23,9 @@ const MessageFriend: React.FC<IMessageFriendProps> = ({message}) => {
                     <div className="flex items-center group">
                         {imagePaths
                             ?
-                            <img src={`${BASE_URL}/${imagePaths}`} className="w-36" alt=""/>
+                            imagePaths.map((img) => (
+                                <img src={`${BASE_URL}/${img}`} className="w-36" alt=""/>
+                            ))
                             :
                             <p className="
                             px-6 py-3 rounded-r-full rounded-l-full bg-gray-800

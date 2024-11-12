@@ -86,11 +86,12 @@ export const deleteMessage = async (req: Request, res: Response): Promise<void> 
 
 export const uploadFiles = async (req: Request, res: Response) => {
     try {
-        if (!req.file) {
-            res.status(400).json({ message: 'No file uploaded' });
+        if (!req.files || (req.files as Express.Multer.File[]).length === 0) {
+             res.status(400).json({ message: 'No files uploaded' });
         }
         const { senderId, receiverId, text } = req.body;
-        const imagePaths: string | undefined = req.file?.path;
+        const files = req.files as Express.Multer.File[];
+        const imagePaths = files.map(file => file.path);
 
         const message: Message = await Message.create({
             senderId,
@@ -98,7 +99,7 @@ export const uploadFiles = async (req: Request, res: Response) => {
             text,
             imagePaths
         });
-        res.json({ ...message.toJSON(), imagePaths: imagePaths });
+        res.json({ ...message.toJSON(), imagePaths });
 
     } catch (error) {
         console.error(error);

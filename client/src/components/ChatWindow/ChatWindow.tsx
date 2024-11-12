@@ -11,7 +11,7 @@ import {editMyMessage, fetchMessages, sendMessage, uploadImage} from "../../api/
 import {IMessage} from "../../types/message/message.interface";
 import {calculateRoom} from "../../utils/createRoom";
 import AddedImage from "../../assets/AddedImage.svg";
-
+import SendBtn from "../../assets/SendBtn.svg";
 
 const socket = io('http://localhost:5001');
 
@@ -24,7 +24,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
     const [editMessage, setEditMessage] =
         useState<IMessage | null>(null);
     const [imageFile, setImageFile] =
-        useState<File | null>(null);
+        useState<File[]>([]);
 
     const currUserToken: string | null = localStorage.getItem('token')
 
@@ -77,11 +77,11 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         return () => {
             socket.off('newMessage');
         };
-    }, [currSelectedFriend, currUserId, currUserToken]);
+    }, [currSelectedFriend, currUserId, currUserToken, currRoom]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setImageFile(e.target.files[0]);
+        if (e.target.files) {
+            setImageFile(Array.from(e.target.files));
         }
     };
 
@@ -110,19 +110,21 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
     const handleImageUpload = async () => {
         if (imageFile && currUserToken) {
             const formData = new FormData();
-            formData.append('image', imageFile);
+            imageFile.forEach((file) => {
+                formData.append('image', file);
+            });
             try {
                 if (currUserId && currSelectedFriend) {
                     const imageData =
                         await uploadImage(currUserId, currSelectedFriend, formData, currUserToken);
-                    setImageFile(null);
+                    setImageFile([]);
                     const messageData = {
                         receiverId: currRoom.toString(),
                         message: imageData,
                     };
                     socket.emit('sendMessage', messageData);
                     setMessages((prevMessages: IMessage[]) => [...prevMessages, imageData]);
-                    setImageFile(null);
+                    setImageFile([]);
                     setMessage('');
                 }
             } catch (error) {
@@ -246,12 +248,14 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                         ">
                             <input
                                 type="file"
+                                name="image"
                                 id="file-input"
+                                multiple
                                 style={{display: 'none'}}
                                 onChange={handleFileChange}
                                 accept="image/*"
                             />
-                            {imageFile ? (
+                            {imageFile.length > 0 ? (
                                 <img src={AddedImage} alt=""/>
                             ) : (
                                 <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
@@ -273,10 +277,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                                 <button type="submit"
                                         className="flex flex-shrink-0 absolute top-0 right-0 mt-2 mr-3
                                 focus:outline-none block text-blue-600 hover:text-blue-700 w-6 h-6">
-                                    <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
-                                        <path
-                                            d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 3a6 6 0 0 1-11.32 0h11.32z"/>
-                                    </svg>
+                                    <img src={SendBtn} alt=""/>
                                 </button>
                             </form>
                         </div>

@@ -34,7 +34,7 @@ interface MessageAttributes {
     text: string;
     senderId: number;
     receiverId: number;
-    imagePaths?: string;
+    imagePaths?: string[];
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -46,7 +46,7 @@ class Message extends Model<MessageAttributes, MessageCreationAttributes> implem
     public text!: string;
     public senderId!: number;
     public receiverId!: number;
-    public imagePaths?: string;
+    public imagePaths?: string[];
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -73,7 +73,7 @@ Message.init(
             },
         },
         imagePaths: {
-            type: DataTypes.STRING,
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: true,
         },
     },
