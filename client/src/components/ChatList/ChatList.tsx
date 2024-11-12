@@ -105,7 +105,7 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
                         <p className="text-gray-200 mt-1 ml-3">No users found</p>
                     ) : (
                         searchUser?.map((user) => (
-                            user.id === currUser?.id ? (
+                            user.id == currUser?.id ? (
                                 <ChatSavedItem user={user} setSelectedFriend={setSelectedFriend}/>
                             ) : (
                                 <ChatItem user={user} setSelectedFriend={setSelectedFriend}/>

@@ -15,7 +15,7 @@ const MessageFriend: React.FC<IMessageFriendProps> = ({message}) => {
             <div className="flex flex-row justify-start">
                 <div className="relative flex flex-shrink-0 w-8 h-8 mr-4">
                     <img className="shadow-md rounded-full w-full h-full object-cover"
-                         src="https://randomuser.me/api/portraits/women/33.jpg"
+                         src={"https://randomuser.me/api/portraits/women/13.jpg"}
                          alt=""
                     />
                 </div>

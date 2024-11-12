@@ -224,7 +224,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                         <div className="flex items-center">
                             <div className="flex flex-shrink-0 w-12 h-12 mr-4 relative">
                                 <img className="shadow-md rounded-full w-full h-full object-cover"
-                                     src={getRandomContact()}
+                                     src={"https://randomuser.me/api/portraits/women/13.jpg"}
                                      alt=""
                                 />
                             </div>
