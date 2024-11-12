@@ -31,15 +31,14 @@ export const getMessages = async (req: Request, res: Response) => {
 export const createMessage = async (req: Request, res: Response): Promise<void> => {
     try {
         const { receiverId, senderId, text } = req.body;
-        if (!text || !senderId || !receiverId) {
-            res.status(400).json({ message: 'Text and IDs are required' });
-        }
-        const message: Message = await Message.create({ senderId, receiverId, text });
+        const message = await Message.create({ senderId, receiverId, text });
         res.json(message);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: 'Create message error', error });
     }
 };
+
 
 export const editMessage = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -81,5 +80,28 @@ export const deleteMessage = async (req: Request, res: Response): Promise<void> 
 
     } catch (error) {
         res.status(500).json({ message: 'Delete message error', error });
+    }
+};
+
+
+export const uploadFiles = async (req: Request, res: Response) => {
+    try {
+        if (!req.file) {
+            res.status(400).json({ message: 'No file uploaded' });
+        }
+        const { senderId, receiverId, text } = req.body;
+        const imagePaths: string | undefined = req.file?.path;
+
+        const message: Message = await Message.create({
+            senderId,
+            receiverId,
+            text,
+            imagePaths
+        });
+        res.json({ ...message.toJSON(), imagePaths: imagePaths });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Upload images error', error });
     }
 };

@@ -1,5 +1,6 @@
 import express from 'express';
 import http from 'http';
+import path from "path";
 import { Server } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -21,6 +22,8 @@ app.use(cors({
     methods: ['GET', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use((req, res, next) => {
     req.io = io;
