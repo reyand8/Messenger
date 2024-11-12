@@ -54,21 +54,21 @@ const MessageMy: React.FC<IMessageMyProps> = ({message, setEditMessage, currRoom
 
                             </svg>
                         </button>
-                        <button type="button" onClick={() => setEditMessage(message[0])}
-                                className="
+                        {imagePaths ? "" : (
+                            <button type="button" onClick={() => setEditMessage(message[0])}
+                                                    className="
                                 hidden group-hover:block flex flex-shrink-0 focus:outline-none mx-2
                                 block rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700
                                 bg-gray-800 w-8 h-8 p-2
                                 ">
-
-                            <svg fill="none" height="16" stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                 width="18" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                            </svg>
-
-                        </button>
+                                <svg fill="none" height="16" stroke="currentColor"
+                                     viewBox="0 0 24 24"
+                                     width="18" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                </svg>
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
