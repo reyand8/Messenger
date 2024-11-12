@@ -23,19 +23,18 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         useState<IMessage[]>([]);
     const [editMessage, setEditMessage] =
         useState<IMessage | null>(null);
-    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imageFile, setImageFile] =
+        useState<File | null>(null);
 
     const currUserToken: string | null = localStorage.getItem('token')
 
     const currUserId: string | undefined = currUser?.id
     const currSelectedFriend: string | undefined  = selectedFriend?.id
 
-    const currRoom = currUserId && currSelectedFriend ? calculateRoom(currUserId, currSelectedFriend) : 0;
+    const currRoom: number = currUserId && currSelectedFriend ? calculateRoom(currUserId, currSelectedFriend) : 0;
 
     useEffect(() => {
         if (!currUserId || !currSelectedFriend) return;
-        const currRoom: number = calculateRoom(currUserId, currSelectedFriend);
-
         socket.emit('joinRoom', currRoom.toString());
 
         const loadMessages = async (): Promise<void> => {
@@ -65,7 +64,6 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         });
 
         socket.on('deleteMessage', (idMsg: number) => {
-            console.log(idMsg)
             setMessages((prevMessages) => {
                 if (idMsg) {
                     return prevMessages.filter((msg: IMessage): boolean =>
@@ -118,7 +116,14 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                     const imageData =
                         await uploadImage(currUserId, currSelectedFriend, formData, currUserToken);
                     setImageFile(null);
+                    const messageData = {
+                        receiverId: currRoom.toString(),
+                        message: imageData,
+                    };
+                    socket.emit('sendMessage', messageData);
                     setMessages((prevMessages: IMessage[]) => [...prevMessages, imageData]);
+                    setImageFile(null);
+                    setMessage('');
                 }
             } catch (error) {
                 console.error('Image upload error', error);
@@ -130,9 +135,8 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         try {
             if (currUserToken && currUserId && currSelectedFriend) {
                 const newMessage = await sendMessage(currUserId, currSelectedFriend, message, currUserToken);
-                const receiverId: number = calculateRoom(currUserId, currSelectedFriend);
                 const messageData = {
-                    receiverId: receiverId.toString(),
+                    receiverId: currRoom.toString(),
                     message: newMessage,
                 };
                 socket.emit('sendMessage', messageData);
@@ -149,9 +153,8 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         try {
             if (currUserToken && currUserId && currSelectedFriend) {
                 const updatedMessage = await editMyMessage(editMessage.id, editMessage.text, currUserToken);
-                const receiverId: number = calculateRoom(currUserId, currSelectedFriend);
                 const messageData = {
-                    receiverId: receiverId.toString(),
+                    receiverId: currRoom.toString(),
                     message: updatedMessage.data,
                 };
                 socket.emit('updateMessage', messageData);
