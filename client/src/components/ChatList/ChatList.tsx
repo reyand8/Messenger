@@ -69,7 +69,6 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
                         </g>
                     </svg>
                 </button>
-                <p className="text-md font-bold md:block ml-20">Messenger</p>
             </div>
             <div className="flex-none p-4">
                 <form>
