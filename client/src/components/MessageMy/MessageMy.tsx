@@ -3,10 +3,11 @@ import React from "react";
 import {formattedDate} from "../../utils/formattedDate";
 import {deleteMessage} from "../../api/messageApi";
 import {IMessageMyProps} from "../../types/props/props.interface";
+import {BASE_URL} from "../../constants/apiUrl";
 
 
 const MessageMy: React.FC<IMessageMyProps> = ({message, setEditMessage, currRoom, socket}) => {
-    const { id, text,  createdAt } = message[0]
+    const { id, text,  createdAt, imagePaths } = message[0];
 
     const handleDeleteMessage = async (idMsg: number) => {
         try {
@@ -31,11 +32,16 @@ const MessageMy: React.FC<IMessageMyProps> = ({message, setEditMessage, currRoom
             <div className="flex flex-row justify-end">
                 <div className="text-sm text-white grid grid-flow-row gap-2">
                     <div className="flex items-center flex-row-reverse group">
-                        <p className="rounded-t-full rounded-l-full bg-blue-700 px-6 py-3 max-w-xs lg:max-w-md">
-                            {text}
-                        </p>
+                        {imagePaths
+                            ?
+                            <img src={`${BASE_URL}/${imagePaths}`} className="w-36" alt=""/>
+                            :
+                            <p className="rounded-t-full rounded-l-full bg-blue-700 px-6 py-3 max-w-xs lg:max-w-md">
+                                {text}
+                            </p>
+                        }
                         <button type="button" onClick={() => handleDeleteMessage(id)}
-                            className="
+                                className="
                             hidden group-hover:block flex flex-shrink-0 focus:outline-none
                             mx-2 block rounded-full text-gray-500 hover:text-gray-900
                             hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2

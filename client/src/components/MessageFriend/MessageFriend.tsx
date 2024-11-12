@@ -2,10 +2,11 @@ import React from 'react';
 
 import {formattedDate} from "../../utils/formattedDate";
 import {IMessageFriendProps} from "../../types/props/props.interface";
+import {BASE_URL} from "../../constants/apiUrl";
 
 
 const MessageFriend: React.FC<IMessageFriendProps> = ({message}) => {
-    const { text,  createdAt } = message[0]
+    const { text,  createdAt, imagePaths } = message[0]
     return (
         <>
             <p className="text-center text-sm text-gray-500 p-4">
@@ -20,12 +21,17 @@ const MessageFriend: React.FC<IMessageFriendProps> = ({message}) => {
                 </div>
                 <div className="text-sm text-gray-700 grid grid-flow-row gap-2">
                     <div className="flex items-center group">
-                        <p className="
+                        {imagePaths
+                            ?
+                            <img src={`${BASE_URL}/${imagePaths}`} className="w-36" alt=""/>
+                            :
+                            <p className="
                             px-6 py-3 rounded-r-full rounded-l-full bg-gray-800
                             max-w-xs lg:max-w-md text-gray-200"
-                        >
-                            {text}
-                        </p>
+                            >
+                                {text}
+                            </p>
+                        }
                     </div>
                 </div>
             </div>
