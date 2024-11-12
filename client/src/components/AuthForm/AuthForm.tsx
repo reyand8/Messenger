@@ -7,7 +7,22 @@ import {Button} from "./ui/button/Button";
 import {IFormData} from "../../types/auth/auth.interface";
 import {IAuthFormProps} from "../../types/props/props.interface";
 
-
+/**
+ * AuthForm Component
+ *
+ * This component is responsible for rendering a form for user authentication. It supports both login and registration
+ * functionality.
+ *
+ * @component
+ *
+ * @prop {Function} setToken - Function to set the authentication token in the parent component.
+ *
+ * @state {boolean} isRegister - Flag to switch between the registration and login form views.
+ * @state {boolean} isLoading - Flag indicating whether a request to the server is in progress.
+ * @state {string | null} error - Stores error message if an authentication error occurs.
+ *
+ * @returns {JSX.Element} The rendered form component for authentication (login or registration).
+ */
 const AuthForm: React.FC<IAuthFormProps> = ({ setToken }) => {
     const [isRegister, setIsRegister] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -20,6 +35,11 @@ const AuthForm: React.FC<IAuthFormProps> = ({ setToken }) => {
         defaultValues: { username: '', email: '', password: '' },
     });
 
+    /**
+     * Handles form submission for login or registration.
+     *
+     * @param {IFormData} data - The form data containing the email, password, and optionally username.
+     */
     const onSubmit = async (data: IFormData): Promise<void> => {
         setIsLoading(true);
         setError(null);

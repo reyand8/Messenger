@@ -5,10 +5,27 @@ import {deleteMessage} from "../../api/messageApi";
 import {IMessageMyProps} from "../../types/props/props.interface";
 import {BASE_URL} from "../../constants/apiUrl";
 
-
+/**
+ * MessageMy component - renders a message sent by the current user, with options to delete or edit the message.
+ *
+ * @param {IMessageMyProps} props - Component props including message, setEditMessage, current room, and socket.
+ * @param {Object[]} props.message - Array of message objects for the current user.
+ * @param {Function} props.setEditMessage - Function to set the message for editing.
+ * @param {string} props.currRoom - Current room ID to handle socket communication.
+ * @param {Socket} props.socket - Socket instance for communication with the server.
+ *
+ * @returns {JSX.Element} The MessageMy component.
+ */
 const MessageMy: React.FC<IMessageMyProps> = ({message, setEditMessage, currRoom, socket}) => {
     const { id, text,  createdAt, imagePaths } = message[0];
 
+    /**
+     * Deletes the message by its ID and emits a socket event to notify others.
+     *
+     * @param {number} idMsg - The ID of the message to delete.
+     *
+     * @returns {Promise<void>} Resolves when the message is deleted and socket event is emitted.
+     */
     const handleDeleteMessage = async (idMsg: number) => {
         try {
             if (idMsg) {

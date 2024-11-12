@@ -15,6 +15,13 @@ import SendBtn from "../../assets/SendBtn.svg";
 
 const socket = io('http://localhost:5001');
 
+/**
+ * ChatWindow component - renders the chat window for a selected friend
+ *
+ * @param {IChatWindowProps} props - component props, including current user and selected friend
+ *
+ * @returns {JSX.Element} The ChatWindow component
+ */
 const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
 
     const [message, setMessage] =
@@ -33,6 +40,9 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
 
     const currRoom: number = currUserId && currSelectedFriend ? calculateRoom(currUserId, currSelectedFriend) : 0;
 
+    /**
+     * useEffect hook to load messages and connect to sockets
+     */
     useEffect(() => {
         if (!currUserId || !currSelectedFriend) return;
         socket.emit('joinRoom', currRoom.toString());
@@ -79,12 +89,22 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         };
     }, [currSelectedFriend, currUserId, currUserToken, currRoom]);
 
+    /**
+     * Handles file change event
+     *
+     * @param {React.ChangeEvent<HTMLInputElement>} e - the file input change event
+     */
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setImageFile(Array.from(e.target.files));
         }
     };
 
+    /**
+     * Handles message input change
+     *
+     * @param {string} msg - the typed message
+     */
     const inputMessage = (msg: string): void => {
         if (editMessage) {
             setEditMessage((prevMessage: IMessage | null) => ({
@@ -96,6 +116,11 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         }
     };
 
+    /**
+     * Handles message submission
+     *
+     * @param {React.FormEvent} e - the form submit event
+     */
     const onSubmitMessage = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
         if (imageFile) {
@@ -107,6 +132,9 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         }
     };
 
+    /**
+     * Handles image upload
+     */
     const handleImageUpload = async () => {
         if (imageFile && currUserToken) {
             const formData = new FormData();
@@ -133,6 +161,9 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         }
     };
 
+    /**
+     * Creates a new message
+     */
     const createNewMessage = async (): Promise<void> => {
         try {
             if (currUserToken && currUserId && currSelectedFriend) {
@@ -150,6 +181,9 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         }
     };
 
+    /**
+     * Updates an existing message
+     */
     const updateMessage = async (): Promise<void> => {
         if (!editMessage) return;
         try {

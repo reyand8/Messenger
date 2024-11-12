@@ -8,7 +8,16 @@ import ChatSavedItem from "../ChatSavedItem/ChatSavedItem";
 import {IChatListProps} from "../../types/props/props.interface";
 import {IUser} from "../../types/user/user.interface";
 
-
+/**
+ * ChatList Component
+ *
+ * This component fetches and displays a list of users, allows searching through the list,
+ * and provides a way to log out.
+ *
+ * Props:
+ * - currUser (IUser | null): The current logged-in user.
+ * - setSelectedFriend (function): A function to set the selected user (friend).
+ */
 const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isError, setIsError] = useState<boolean>(false);
@@ -31,6 +40,9 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
         getAllUsers();
     }, []);
 
+    /**
+     * Handles logging out by clearing the token from localStorage and reloading the page.
+     */
     const handleFinishSession = (): void => {
         localStorage.removeItem('token');
         window.location.reload();
