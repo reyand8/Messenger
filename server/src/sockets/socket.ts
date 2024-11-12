@@ -6,11 +6,11 @@ const configureSocket = (io: Server) => {
     io.on('connection', (socket: Socket) => {
         socket.on('joinRoom', (userId: string) => {
             socket.join(userId);
+            console.log(`User is in the room ${userId}`);
         });
 
         socket.on('sendMessage', (messageData) => {
             const { receiverId, message } = messageData;
-            console.log(messageData)
             if (socket.rooms.has(receiverId)) {
                 io.to(receiverId).emit('newMessage', message);
             } else {
@@ -20,7 +20,6 @@ const configureSocket = (io: Server) => {
 
         socket.on('updateMessage', (messageData) => {
             const { receiverId, message } = messageData;
-            console.log(messageData)
             if (socket.rooms.has(receiverId)) {
                 io.to(receiverId).emit('newMessage', message);
             } else {
