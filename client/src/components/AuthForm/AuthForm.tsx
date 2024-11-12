@@ -92,6 +92,7 @@ const AuthForm: React.FC<IAuthFormProps> = ({ setToken }) => {
                                 placeholder="Username"
                                 error={errors.username}
                                 className="mb-7"
+                                autoComplete="current-username"
                             />
                         )}
                     />
@@ -106,6 +107,7 @@ const AuthForm: React.FC<IAuthFormProps> = ({ setToken }) => {
                                 placeholder="Email"
                                 error={errors.email}
                                 className="mb-10"
+                                autoComplete="current-email"
                             />
                         )}
                     />
@@ -120,6 +122,7 @@ const AuthForm: React.FC<IAuthFormProps> = ({ setToken }) => {
                                 type="password"
                                 error={errors.password}
                                 className="mb-13"
+                                autoComplete="current-password"
                             />
                         )}
                     />
