@@ -3,6 +3,7 @@ export interface IMessage {
     text: string;
     senderId: number;
     receiverId: number;
+    imagePaths: string,
     createdAt: string;
     updatedAt: string;
 }
