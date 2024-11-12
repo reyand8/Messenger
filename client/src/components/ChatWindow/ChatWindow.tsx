@@ -7,9 +7,10 @@ import StartConversation from "../Status/StartConversation/StartConversation";
 import SavedMessages from "../../assets/SavedMessages.jpg";
 import getRandomContact from "../../utils/randomImg";
 import {IChatWindowProps} from "../../types/props/props.interface";
-import {editMyMessage, fetchMessages, sendMessage} from "../../api/messageApi";
+import {editMyMessage, fetchMessages, sendMessage, uploadImage} from "../../api/messageApi";
 import {IMessage} from "../../types/message/message.interface";
 import {calculateRoom} from "../../utils/createRoom";
+import AddedImage from "../../assets/AddedImage.svg";
 
 
 const socket = io('http://localhost:5001');
@@ -22,6 +23,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         useState<IMessage[]>([]);
     const [editMessage, setEditMessage] =
         useState<IMessage | null>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const currUserToken: string | null = localStorage.getItem('token')
 
@@ -79,7 +81,13 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         };
     }, [currSelectedFriend, currUserId, currUserToken]);
 
-    const  inputMessage = (msg: string): void => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setImageFile(e.target.files[0]);
+        }
+    };
+
+    const inputMessage = (msg: string): void => {
         if (editMessage) {
             setEditMessage((prevMessage: IMessage | null) => ({
                 ...prevMessage!,
@@ -92,10 +100,29 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
 
     const onSubmitMessage = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
-        if (!editMessage) {
-            await createNewMessage()
+        if (imageFile) {
+            await handleImageUpload();
+        } else if (editMessage) {
+            await updateMessage();
         } else {
-            await updateMessage()
+            await createNewMessage();
+        }
+    };
+
+    const handleImageUpload = async () => {
+        if (imageFile && currUserToken) {
+            const formData = new FormData();
+            formData.append('image', imageFile);
+            try {
+                if (currUserId && currSelectedFriend) {
+                    const imageData =
+                        await uploadImage(currUserId, currSelectedFriend, formData, currUserToken);
+                    setImageFile(null);
+                    setMessages((prevMessages: IMessage[]) => [...prevMessages, imageData]);
+                }
+            } catch (error) {
+                console.error('Image upload error', error);
+            }
         }
     };
 
@@ -204,13 +231,31 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                 <div className="flex-none">
                     <div className="flex flex-row items-center p-4">
                         <button type="button"
-                                className="flex flex-shrink-0 focus:outline-none mx-2
-                        block text-blue-600 hover:text-blue-700 w-6 h-6
+                                onClick={() => {
+                                    const fileInput = document.getElementById('file-input') as HTMLInputElement | null;
+                                    if (fileInput) {
+                                        fileInput.click();
+                                    }
+                                }}
+                                className="
+                                flex flex-shrink-0 focus:outline-none mx-2
+                                block text-blue-600 hover:text-blue-700 w-6 h-6
                         ">
-                            <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
-                                <path
-                                    d="M10,1.6c-4.639,0-8.4,3.761-8.4,8.4s3.761,8.4,8.4,8.4s8.4-3.761,8.4-8.4S14.639,1.6,10,1.6z M15,11h-4v4H9  v-4H5V9h4V5h2v4h4V11z"/>
-                            </svg>
+                            <input
+                                type="file"
+                                id="file-input"
+                                style={{display: 'none'}}
+                                onChange={handleFileChange}
+                                accept="image/*"
+                            />
+                            {imageFile ? (
+                                <img src={AddedImage} alt=""/>
+                            ) : (
+                                <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
+                                    <path
+                                        d="M10,1.6c-4.639,0-8.4,3.761-8.4,8.4s3.761,8.4,8.4,8.4s8.4-3.761,8.4-8.4S14.639,1.6,10,1.6z M15,11h-4v4H9  v-4H5V9h4V5h2v4h4V11z"/>
+                                </svg>
+                            )}
                         </button>
                         <div className="relative flex-grow">
                             <form onSubmit={onSubmitMessage}>
