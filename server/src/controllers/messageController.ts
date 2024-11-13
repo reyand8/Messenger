@@ -33,6 +33,7 @@ export const getMessages = async (req: Request, res: Response): Promise<void> =>
         });
         res.json(messages);
     } catch (error) {
+        console.error('Get messages error:', error);
         res.status(500).json({ message: 'Get messages error', error });
     }
 };
@@ -89,6 +90,7 @@ export const editMessage = async (req: Request, res: Response): Promise<void> =>
 
         res.json({ message: 'Your message was updated', data: message });
     } catch (error) {
+        console.error('Edit message error:', error);
         res.status(500).json({ message: 'Edit message error', error });
     }
 };
@@ -116,6 +118,7 @@ export const deleteMessage = async (req: Request, res: Response): Promise<void> 
         }
 
     } catch (error) {
+        console.error('Delete message error:', error);
         res.status(500).json({ message: 'Delete message error', error });
     }
 };
@@ -149,7 +152,7 @@ export const uploadFiles = async (req: Request, res: Response): Promise<void> =>
         res.json({ ...message.toJSON(), imagePaths });
 
     } catch (error) {
-        console.error(error);
+        console.error('Upload files error:', error);
         res.status(500).json({ message: 'Upload images error', error });
     }
 };

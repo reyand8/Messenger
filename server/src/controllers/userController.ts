@@ -19,6 +19,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
         });
         res.json(users);
     } catch (error) {
+        console.error('Get users error:', error);
         res.status(500).json({ message: 'Get users error', error });
     }
 };
