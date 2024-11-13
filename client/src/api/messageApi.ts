@@ -12,7 +12,7 @@ import {API_MESSAGES_URL} from '../constants/apiUrl';
  * @returns {Promise<any>} The response data from the server (usually an array of messages).
  */
 export const fetchMessages =
-    async (receiverId: string, senderId: string, token: string ) => {
+    async (receiverId: string, senderId: string, token: string ): Promise<any> => {
         const response =
         await axios.get(`${API_MESSAGES_URL}/${senderId}/${receiverId}/`, {
             headers: { Authorization: `Bearer ${token}` }
@@ -30,7 +30,7 @@ export const fetchMessages =
  *
  * @returns {Promise<any>} The response data from the server (usually the created message).
  */
-export const sendMessage = async (senderId: string, receiverId: string, text: string, token: string) => {
+export const sendMessage = async (senderId: string, receiverId: string, text: string, token: string): Promise<any> => {
     const newMessage = {
         senderId: senderId,
         receiverId: receiverId,
@@ -50,7 +50,7 @@ export const sendMessage = async (senderId: string, receiverId: string, text: st
  *
  * @returns {Promise<any>} The response data from the server (usually a success message).
  */
-export const deleteMessage = async (id: number) => {
+export const deleteMessage = async (id: number): Promise<any> => {
     const response =
         await axios.post(`${API_MESSAGES_URL}/delete/${id}`);
     return response.data;
@@ -65,7 +65,7 @@ export const deleteMessage = async (id: number) => {
  *
  * @returns {Promise<any>} The response data from the server (usually the edited message).
  */
-export const editMyMessage = async (id: number, text: string, token: string) => {
+export const editMyMessage = async (id: number, text: string, token: string): Promise<any> => {
     const editedMessage = {
         text: text
     };
@@ -86,7 +86,7 @@ export const editMyMessage = async (id: number, text: string, token: string) => 
  *
  * @returns {Promise<any>} The response data from the server (usually the uploaded image or message).
  */
-export const uploadImage = async (senderId: string, receiverId: string, formData: FormData, token: string) => {
+export const uploadImage = async (senderId: string, receiverId: string, formData: FormData, token: string): Promise<any> => {
     formData.append('senderId', senderId);
     formData.append('receiverId', receiverId);
     formData.append('text', '');

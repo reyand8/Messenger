@@ -7,7 +7,7 @@ import {API_USERS_URL} from '../constants/apiUrl';
  *
  * @returns {Promise<any>} The response data from the server, usually an array of users.
  */
-export const fetchAllUsers = async () => {
+export const fetchAllUsers = async (): Promise<any> => {
     try {
         const response = await axios.get(`${API_USERS_URL}/allUsers`);
         return response.data;
