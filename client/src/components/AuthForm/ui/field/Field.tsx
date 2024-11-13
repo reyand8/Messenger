@@ -1,15 +1,15 @@
-import { forwardRef } from "react";
+import { forwardRef } from 'react';
 import { InputHTMLAttributes } from 'react';
 
-import {IFieldProps} from "../../../../types/props/props.interface";
+import {IFieldProps} from '../../../../types/props/props.interface';
 
 
 export type TypeInputProps = InputHTMLAttributes<HTMLInputElement> & IFieldProps;
 
 export const Field = forwardRef<HTMLInputElement, TypeInputProps>(
     ({
-         error, style,
-         className, ...rest }, ref) => {
+        error, style,
+        className, ...rest }, ref) => {
         return (
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" style={style}>
                 <input ref={ref}

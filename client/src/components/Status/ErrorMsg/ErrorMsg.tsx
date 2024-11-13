@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import ErrorImg from "../../../assets/ErrorImg.svg";
+import ErrorImg from '../../../assets/ErrorImg.svg';
 
 
 const ErrorMsg: React.FC = () => {
@@ -11,7 +11,7 @@ const ErrorMsg: React.FC = () => {
                 Error!
             </p>
         </div>
-    )
-}
+    );
+};
 
 export default ErrorMsg;

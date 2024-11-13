@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import io from 'socket.io-client';
 
-import MessageFriend from "../MessageFriend/MessageFriend";
-import MessageMy from "../MessageMy/MessageMy";
-import StartConversation from "../Status/StartConversation/StartConversation";
-import SavedMessages from "../../assets/SavedMessages.jpg";
-import {IChatWindowProps} from "../../types/props/props.interface";
-import {editMyMessage, fetchMessages, sendMessage, uploadImage} from "../../api/messageApi";
-import {IMessage} from "../../types/message/message.interface";
-import {calculateRoom} from "../../utils/createRoom";
-import AddedImage from "../../assets/AddedImage.svg";
-import SendBtn from "../../assets/SendBtn.svg";
+import MessageFriend from '../MessageFriend/MessageFriend';
+import MessageMy from '../MessageMy/MessageMy';
+import StartConversation from '../Status/StartConversation/StartConversation';
+import SavedMessages from '../../assets/SavedMessages.jpg';
+import {IChatWindowProps} from '../../types/props/props.interface';
+import {editMyMessage, fetchMessages, sendMessage, uploadImage} from '../../api/messageApi';
+import {IMessage} from '../../types/message/message.interface';
+import {calculateRoom} from '../../utils/createRoom';
+import AddedImage from '../../assets/AddedImage.svg';
+import SendBtn from '../../assets/SendBtn.svg';
 
 const socket = io('http://localhost:5001');
 
@@ -32,10 +32,10 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
     const [imageFile, setImageFile] =
         useState<File[]>([]);
 
-    const currUserToken: string | null = localStorage.getItem('token')
+    const currUserToken: string | null = localStorage.getItem('token');
 
-    const currUserId: string | undefined = currUser?.id
-    const currSelectedFriend: string | undefined  = selectedFriend?.id
+    const currUserId: string | undefined = currUser?.id;
+    const currSelectedFriend: string | undefined  = selectedFriend?.id;
 
     const currRoom: number = currUserId && currSelectedFriend ? calculateRoom(currUserId, currSelectedFriend) : 0;
 
@@ -111,7 +111,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                 text: msg,
             }));
         } else {
-            setMessage(msg)
+            setMessage(msg);
         }
     };
 
@@ -211,8 +211,8 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                         <div className="flex items-center">
                             <div className="flex flex-shrink-0 w-12 h-12 mr-4 relative">
                                 <img className="shadow-md rounded-full w-full h-full object-cover"
-                                     src={SavedMessages}
-                                     alt=""
+                                    src={SavedMessages}
+                                    alt=""
                                 />
                             </div>
                             <div className="text-sm">
@@ -223,8 +223,8 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                         <div className="flex items-center">
                             <div className="flex flex-shrink-0 w-12 h-12 mr-4 relative">
                                 <img className="shadow-md rounded-full w-full h-full object-cover"
-                                     src={"https://randomuser.me/api/portraits/women/13.jpg"}
-                                     alt=""
+                                    src={'https://randomuser.me/api/portraits/women/13.jpg'}
+                                    alt=""
                                 />
                             </div>
                             <div className="text-sm">
@@ -257,10 +257,10 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                     {messages.map((msg: IMessage) => {
                         if (currUserId && (+msg.senderId === +currUserId)) {
                             return <MessageMy key={msg.id}
-                                              message={[msg]}
-                                              setEditMessage={setEditMessage}
-                                              currRoom={currRoom}
-                                              socket={socket}
+                                message={[msg]}
+                                setEditMessage={setEditMessage}
+                                currRoom={currRoom}
+                                socket={socket}
                             />;
                         }
                         return <MessageFriend key={msg.id} message={[msg]}/>;
@@ -269,13 +269,13 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                 <div className="flex-none">
                     <div className="flex flex-row items-center p-4">
                         <button type="button"
-                                onClick={() => {
-                                    const fileInput = document.getElementById('file-input') as HTMLInputElement | null;
-                                    if (fileInput) {
-                                        fileInput.click();
-                                    }
-                                }}
-                                className="
+                            onClick={() => {
+                                const fileInput = document.getElementById('file-input') as HTMLInputElement | null;
+                                if (fileInput) {
+                                    fileInput.click();
+                                }
+                            }}
+                            className="
                                 flex flex-shrink-0 focus:outline-none mx-2
                                 block text-blue-600 hover:text-blue-700 w-6 h-6
                         ">
@@ -308,7 +308,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                                         inputMessage(e.target.value)} placeholder="Aa"/>
                                 <button type="submit"
-                                        className="flex flex-shrink-0 absolute top-0 right-0 mt-2 mr-3
+                                    className="flex flex-shrink-0 absolute top-0 right-0 mt-2 mr-3
                                 focus:outline-none block text-blue-600 hover:text-blue-700 w-6 h-6">
                                     <img src={SendBtn} alt=""/>
                                 </button>

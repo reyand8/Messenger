@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import {Controller, useForm} from "react-hook-form";
+import {Controller, useForm} from 'react-hook-form';
 
 import { register, login } from '../../api/authApi';
-import Field from "./ui/field/Field";
-import {Button} from "./ui/button/Button";
-import {IFormData} from "../../types/auth/auth.interface";
-import {IAuthFormProps} from "../../types/props/props.interface";
+import Field from './ui/field/Field';
+import {Button} from './ui/button/Button';
+import {IFormData} from '../../types/auth/auth.interface';
+import {IAuthFormProps} from '../../types/props/props.interface';
 
 /**
  * AuthForm Component
@@ -25,15 +25,15 @@ import {IAuthFormProps} from "../../types/props/props.interface";
  */
 const AuthForm: React.FC<IAuthFormProps> = ({ setToken }) => {
     const [isRegister, setIsRegister] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
     const {
         control,
         handleSubmit,
         formState: { errors } } = useForm<IFormData>({
-        defaultValues: { username: '', email: '', password: '' },
-    });
+            defaultValues: { username: '', email: '', password: '' },
+        });
 
     /**
      * Handles form submission for login or registration.
@@ -80,22 +80,22 @@ const AuthForm: React.FC<IAuthFormProps> = ({ setToken }) => {
                          Login
                     </h1>
                 }
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
-                {isRegister && (
-                    <Controller
-                        name="username"
-                        control={control}
-                        rules={{ required: 'Username is required' }}
-                        render={({ field }) => (
-                            <Field
-                                {...field}
-                                placeholder="Username"
-                                error={errors.username}
-                                className="mb-7"
-                                autoComplete="current-username"
-                            />
-                        )}
-                    />
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
+                    {isRegister && (
+                        <Controller
+                            name="username"
+                            control={control}
+                            rules={{ required: 'Username is required' }}
+                            render={({ field }) => (
+                                <Field
+                                    {...field}
+                                    placeholder="Username"
+                                    error={errors.username}
+                                    className="mb-7"
+                                    autoComplete="current-username"
+                                />
+                            )}
+                        />
                     )}
                     <Controller
                         name="email"

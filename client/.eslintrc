@@ -1,0 +1,14 @@
+{
+  "ignorePatterns": ["src/assets/**"],
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ],
+  "rules": {
+    "indent": ["error", 4],
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "max-len": ["error", { "code": 120 }],
+    "semi": ["error", "always"]
+  }
+}

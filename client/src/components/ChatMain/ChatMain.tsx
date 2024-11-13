@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 
-import ChatList from "../ChatList/ChatList";
-import ChatWindow from "../ChatWindow/ChatWindow";
-import {ISelectedFriend} from "../../types/user/user.interface";
-import {IChatMainProps} from "../../types/props/props.interface";
+import ChatList from '../ChatList/ChatList';
+import ChatWindow from '../ChatWindow/ChatWindow';
+import {ISelectedFriend} from '../../types/user/user.interface';
+import {IChatMainProps} from '../../types/props/props.interface';
 
 
 const ChatMain: React.FC<IChatMainProps> = ({ currUser }) => {

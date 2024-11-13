@@ -1,8 +1,8 @@
-import {ICurrUser, IUser} from "../user/user.interface";
-import {FieldError} from "react-hook-form";
-import {IMessage} from "../message/message.interface";
-import React from "react";
-import {Socket} from "socket.io-client";
+import {ICurrUser, IUser} from '../user/user.interface';
+import {FieldError} from 'react-hook-form';
+import {IMessage} from '../message/message.interface';
+import React from 'react';
+import {Socket} from 'socket.io-client';
 
 
 export interface IAuthFormProps {

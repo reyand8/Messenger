@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {API_USERS_URL} from "../constants/apiUrl";
+import {API_USERS_URL} from '../constants/apiUrl';
 
 /**
  * Fetches all users from the server by sending a GET request.
@@ -12,6 +12,6 @@ export const fetchAllUsers = async () => {
         const response = await axios.get(`${API_USERS_URL}/allUsers`);
         return response.data;
     } catch (err) {
-        console.error(err)
+        console.error(err);
     }
 };

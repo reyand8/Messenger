@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 
 const StartConversation: React.FC = () => {
@@ -10,7 +10,7 @@ const StartConversation: React.FC = () => {
                 </p>
             </div>
         </section>
-    )
-}
+    );
+};
 
 export default StartConversation;

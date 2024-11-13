@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 
-import {fetchAllUsers} from "../../api/userApi";
-import ErrorMsg from "../Status/ErrorMsg/ErrorMsg";
-import LoadingMsg from "../Status/LoadingMsg/LoadingMsg";
-import ChatItem from "../ChatItem/ChatItem";
-import ChatSavedItem from "../ChatSavedItem/ChatSavedItem";
-import {IChatListProps} from "../../types/props/props.interface";
-import {IUser} from "../../types/user/user.interface";
+import {fetchAllUsers} from '../../api/userApi';
+import ErrorMsg from '../Status/ErrorMsg/ErrorMsg';
+import LoadingMsg from '../Status/LoadingMsg/LoadingMsg';
+import ChatItem from '../ChatItem/ChatItem';
+import ChatSavedItem from '../ChatSavedItem/ChatSavedItem';
+import {IChatListProps} from '../../types/props/props.interface';
+import {IUser} from '../../types/user/user.interface';
 
 /**
  * ChatList Component
@@ -19,9 +19,9 @@ import {IUser} from "../../types/user/user.interface";
  * - setSelectedFriend (function): A function to set the selected user (friend).
  */
 const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
-    const [allUsers, setAllUsers] = useState<IUser[]>()
+    const [allUsers, setAllUsers] = useState<IUser[]>();
     const [searchQuery, setSearchQuery] = useState<string>('');
 
     useEffect(() => {
@@ -29,14 +29,14 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
             setIsLoading(true);
             try {
                 const response = await fetchAllUsers();
-                setAllUsers(response)
+                setAllUsers(response);
             } catch (error: any) {
                 setIsError(true);
                 console.error('Error:', error);
             } finally {
                 setIsLoading(false);
             }
-        }
+        };
         getAllUsers();
     }, []);
 
@@ -46,7 +46,7 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
     const handleFinishSession = (): void => {
         localStorage.removeItem('token');
         window.location.reload();
-    }
+    };
 
     const searchUser: IUser[] | undefined = allUsers?.filter(user =>
         user.username.toLowerCase().includes(searchQuery.toLowerCase())
@@ -58,7 +58,7 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
             <div className="flex flex-row justify-between items-center flex-none p-5 w-9">
                 <button onClick={() => handleFinishSession()}>
                     <svg height="32"
-                         viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg">
+                        viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg">
                         <title/>
                         <g data-name="1" id="_1">
                             <path
@@ -88,7 +88,7 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
                             <span className="absolute top-0 left-0 mt-2 ml-3 inline-block">
                                 <svg viewBox="0 0 24 24" className="w-6 h-6">
                                     <path fill="#bbb"
-                                          d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+                                        d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
                                 </svg>
                             </span>
                         </label>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {API_AUTH_URL} from "../constants/apiUrl";
+import {API_AUTH_URL} from '../constants/apiUrl';
 
 /**
  * Registers a new user by sending a POST request to the server with the user's credentials.
@@ -11,7 +11,7 @@ import {API_AUTH_URL} from "../constants/apiUrl";
  *
  * @returns {Promise<any>} The response data from the server (e.g., user data, success message).
  */
-export const register = async (username: string, email: string, password: string) => {
+export const register = async (username: string, email: string, password: string): Promise<any> => {
     const response =
         await axios.post(`${API_AUTH_URL}/register`, { username, email, password });
     return response.data;
@@ -25,7 +25,7 @@ export const register = async (username: string, email: string, password: string
  *
  * @returns {Promise<any>} The response data from the server (e.g., authentication token).
  */
-export const login = async (email: string, password: string)  => {
+export const login = async (email: string, password: string): Promise<any>  => {
     const response =
         await axios.post(`${API_AUTH_URL}/login`, { email, password });
     return response.data;
@@ -40,7 +40,7 @@ export const login = async (email: string, password: string)  => {
  *
  * @throws {Error} If the token is invalid or verification fails, an error is thrown.
  */
-export const verifyToken = async (token: string)  => {
+export const verifyToken = async (token: string): Promise<any>  => {
     try {
         const response =
             await axios.post(`${API_AUTH_URL}/verifyToken`, {token});

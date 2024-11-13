@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import {formattedDate} from "../../utils/formattedDate";
-import {deleteMessage} from "../../api/messageApi";
-import {IMessageMyProps} from "../../types/props/props.interface";
-import {BASE_URL} from "../../constants/apiUrl";
+import {formattedDate} from '../../utils/formattedDate';
+import {deleteMessage} from '../../api/messageApi';
+import {IMessageMyProps} from '../../types/props/props.interface';
+import {BASE_URL} from '../../constants/apiUrl';
 
 /**
  * MessageMy component - renders a message sent by the current user, with options to delete or edit the message.
@@ -35,7 +35,7 @@ const MessageMy: React.FC<IMessageMyProps> = (
                     receiverId: currRoom.toString(),
                     idMsg: idMsg,
                 };
-                socket.emit('deleteMessage', messageData)
+                socket.emit('deleteMessage', messageData);
             }
         } catch (error) {
             console.error(error);
@@ -61,29 +61,29 @@ const MessageMy: React.FC<IMessageMyProps> = (
                             </p>
                         }
                         <button type="button" onClick={() => handleDeleteMessage(id)}
-                                className="
+                            className="
                             hidden group-hover:block flex flex-shrink-0 focus:outline-none
                             mx-2 block rounded-full text-gray-500 hover:text-gray-900
                             hover:bg-gray-700 bg-gray-800 w-8 h-8 p-2
                             ">
                             <svg fill="none" height="18" stroke="currentColor"
-                                 viewBox="0 0 53 53"
-                                 width="20" xmlns="http://www.w3.org/2000/svg">
+                                viewBox="0 0 53 53"
+                                width="20" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4v-24h-24v24zm26-30h-7l-2-2h-10l-2 2h-7v4h28v-4z"/>
 
                             </svg>
                         </button>
-                        {imagePaths ? "" : (
+                        {imagePaths ? '' : (
                             <button type="button" onClick={() => setEditMessage(message[0])}
-                                                    className="
+                                className="
                                 hidden group-hover:block flex flex-shrink-0 focus:outline-none mx-2
                                 block rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-700
                                 bg-gray-800 w-8 h-8 p-2
                                 ">
                                 <svg fill="none" height="16" stroke="currentColor"
-                                     viewBox="0 0 24 24"
-                                     width="18" xmlns="http://www.w3.org/2000/svg">
+                                    viewBox="0 0 24 24"
+                                    width="18" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                 </svg>

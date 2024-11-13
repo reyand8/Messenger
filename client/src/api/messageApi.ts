@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {API_MESSAGES_URL} from "../constants/apiUrl";
+import {API_MESSAGES_URL} from '../constants/apiUrl';
 
 /**
  * Fetches messages between two users by sending a GET request to the server.
@@ -13,12 +13,12 @@ import {API_MESSAGES_URL} from "../constants/apiUrl";
  */
 export const fetchMessages =
     async (receiverId: string, senderId: string, token: string ) => {
-    const response =
+        const response =
         await axios.get(`${API_MESSAGES_URL}/${senderId}/${receiverId}/`, {
-        headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
-};
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    };
 
 /**
  * Sends a message from one user to another by sending a POST request to the server.
@@ -38,8 +38,8 @@ export const sendMessage = async (senderId: string, receiverId: string, text: st
     };
     const response =
         await axios.post(API_MESSAGES_URL, newMessage, {
-        headers: { Authorization: `Bearer ${token}` }
-    });
+            headers: { Authorization: `Bearer ${token}` }
+        });
     return response.data;
 };
 
@@ -71,8 +71,8 @@ export const editMyMessage = async (id: number, text: string, token: string) => 
     };
     const response =
         await axios.post(`${API_MESSAGES_URL}/edit/${id}`, editedMessage, {
-        headers: { Authorization: `Bearer ${token}` }
-    });
+            headers: { Authorization: `Bearer ${token}` }
+        });
     return response.data;
 };
 

@@ -1,6 +1,6 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes } from 'react';
 
-import { Loader } from "../loader/Loader";
+import { Loader } from '../loader/Loader';
 
 
 interface IButton extends InputHTMLAttributes<HTMLButtonElement> {

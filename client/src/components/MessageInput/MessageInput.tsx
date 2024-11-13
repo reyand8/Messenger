@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {IMessageInputProps} from "../../types/props/props.interface";
+import {IMessageInputProps} from '../../types/props/props.interface';
 
 
 const MessageInput: React.FC<IMessageInputProps> = ({handleSendMessage}) => {
@@ -10,7 +10,7 @@ const MessageInput: React.FC<IMessageInputProps> = ({handleSendMessage}) => {
         <div className="flex-none">
             <div className="flex flex-row items-center p-4">
                 <button type="button"
-                        className="flex flex-shrink-0 focus:outline-none mx-2
+                    className="flex flex-shrink-0 focus:outline-none mx-2
                         block text-blue-600 hover:text-blue-700 w-6 h-6
                         ">
                     <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
@@ -26,7 +26,7 @@ const MessageInput: React.FC<IMessageInputProps> = ({handleSendMessage}) => {
                             text-gray-200 focus:shadow-md transition duration-300 ease-in"
                             type="text" value={message}  placeholder="Aa"/>
                         <button type="submit"
-                                className="flex flex-shrink-0 absolute top-0 right-0 mt-2 mr-3
+                            className="flex flex-shrink-0 absolute top-0 right-0 mt-2 mr-3
                                 focus:outline-none block text-blue-600 hover:text-blue-700 w-6 h-6">
                             <svg viewBox="0 0 20 20" className="w-full h-full fill-current">
                                 <path

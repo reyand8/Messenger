@@ -10,7 +10,7 @@ const contacts: string[] = [
     'https://randomuser.me/api/portraits/men/20.jpg',
     'https://randomuser.me/api/portraits/men/17.jpg',
     'https://randomuser.me/api/portraits/men/14.jpg',
-]
+];
 
 function getRandomContact(): string {
     const randomIndex = Math.floor(Math.random() * contacts.length);
