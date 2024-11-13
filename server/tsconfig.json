@@ -19,10 +19,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
+    "rootDir": "./src",
     "typeRoots": ["./node_modules/@types", "./src/types", "./src/types/express.d.ts"]
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "src/config/*"
   ]
 }
