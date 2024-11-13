@@ -1,4 +1,5 @@
 import { Server } from 'socket.io';
+import {IUserPayload} from './user.interface';
 
 declare module 'express' {
     interface Request {
@@ -13,5 +14,11 @@ declare global {
         interface Request {
             io: Server;
         }
+    }
+}
+
+declare module 'express-serve-static-core' {
+    interface Request {
+        user?: IUserPayload;
     }
 }

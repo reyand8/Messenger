@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 
-import {login, register, verifyToken} from "../controllers/authController";
+import {login, register, verifyToken} from '../controllers/authController';
 
 
 const router = express.Router();

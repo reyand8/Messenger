@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "server": "ts-node --files src/index.ts"
+    "server": "ts-node --files src/index.ts",
+    "lint": "eslint -c .eslintrc --ext .tsx,.ts ./src/*",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +28,8 @@
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "eslint": "^8.57.1",
+    "eslint-config-react-app": "^7.0.1",
     "express": "^4.21.1",
     "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",

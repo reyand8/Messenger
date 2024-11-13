@@ -1,4 +1,4 @@
-import {IApiError} from "../types/error.interface";
+import {IApiError} from '../types/error.interface';
 
 
 const ApiError = (status: number, message: string): IApiError => {

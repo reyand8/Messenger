@@ -3,13 +3,13 @@ import { Server, Socket } from 'socket.io';
 
 const configureSocket = (io: Server) => {
 
-    io.on('connection', (socket: Socket) => {
+    io.on('connection', (socket: Socket): void => {
         socket.on('joinRoom', (userId: string) => {
             socket.join(userId);
             console.log(`User is in the room ${userId}`);
         });
 
-        socket.on('sendMessage', (messageData) => {
+        socket.on('sendMessage', (messageData): void  => {
             const { receiverId, message } = messageData;
             if (socket.rooms.has(receiverId)) {
                 io.to(receiverId).emit('newMessage', message);
@@ -18,7 +18,7 @@ const configureSocket = (io: Server) => {
             }
         });
 
-        socket.on('updateMessage', (messageData) => {
+        socket.on('updateMessage', (messageData): void  => {
             const { receiverId, message } = messageData;
             if (socket.rooms.has(receiverId)) {
                 io.to(receiverId).emit('newMessage', message);
@@ -27,7 +27,7 @@ const configureSocket = (io: Server) => {
             }
         });
 
-        socket.on('deleteMessage', (messageData) => {
+        socket.on('deleteMessage', (messageData): void => {
             const { receiverId, idMsg } = messageData;
             if (socket.rooms.has(receiverId)) {
                 io.to(receiverId).emit('deleteMessage', idMsg);
@@ -36,7 +36,7 @@ const configureSocket = (io: Server) => {
             }
         });
 
-        socket.on('disconnect', () => {
+        socket.on('disconnect', (): void  => {
             console.log('User disconnected');
         });
     });

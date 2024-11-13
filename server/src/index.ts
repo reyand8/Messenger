@@ -1,6 +1,6 @@
 import express from 'express';
 import http from 'http';
-import path from "path";
+import path from 'path';
 import { Server } from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -9,8 +9,8 @@ import authRoutes from './routes/authRoutes';
 import messageRoutes from './routes/messageRoutes';
 import configureSocket from './sockets/socket';
 
-import sequelize from "./config/db";
-import userRoutes from "./routes/userRoutes";
+import sequelize from './config/db';
+import userRoutes from './routes/userRoutes';
 
 
 dotenv.config();
@@ -37,7 +37,7 @@ app.use('/api/messages', messageRoutes);
 
 const server = http.createServer(app);
 
-const PORT = process.env.PORT || 5001
+const PORT: string | 5001 = process.env.PORT || 5001;
 
 const io = new Server(server, {
     cors: {
@@ -50,12 +50,12 @@ configureSocket(io);
 
 const start = async () => {
     try {
-        await sequelize.authenticate()
-        await sequelize.sync()
-        server.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+        await sequelize.authenticate();
+        await sequelize.sync();
+        server.listen(PORT, () => console.log(`Server started on port ${PORT}`));
     } catch (e) {
-        console.error(e)
+        console.error(e);
     }
-}
+};
 
-start()
+start();

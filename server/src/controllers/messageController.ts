@@ -14,7 +14,7 @@ import { Message, User } from '../models/User';
  * @param {Response} res - The response object used to send back the messages.
  * @returns {Promise<Response>} A JSON response with the messages.
  */
-export const getMessages = async (req: Request, res: Response) => {
+export const getMessages = async (req: Request, res: Response)=> {
     try {
         const { receiverId, senderId } = req.params;
 
@@ -53,7 +53,7 @@ export const createMessage = async (req: Request, res: Response): Promise<void> 
         const message = await Message.create({ senderId, receiverId, text });
         res.json(message);
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(500).json({ message: 'Create message error', error });
     }
 };
@@ -133,7 +133,8 @@ export const deleteMessage = async (req: Request, res: Response): Promise<void> 
 export const uploadFiles = async (req: Request, res: Response) => {
     try {
         if (!req.files || (req.files as Express.Multer.File[]).length === 0) {
-             res.status(400).json({ message: 'No files uploaded' });
+            res.status(400).json({ message: 'No files uploaded' });
+            return;
         }
         const { senderId, receiverId, text } = req.body;
         const files = req.files as Express.Multer.File[];

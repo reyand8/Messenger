@@ -3,7 +3,7 @@ import express from 'express';
 import {getMessages, createMessage, deleteMessage, editMessage, uploadFiles}
     from '../controllers/messageController';
 import {uploadFilesMiddleware}
-    from "../middleware/uploadMiddleware";
+    from '../middleware/uploadMiddleware';
 
 
 const router = express.Router();
