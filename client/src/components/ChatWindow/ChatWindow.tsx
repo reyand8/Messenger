@@ -122,7 +122,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
      */
     const onSubmitMessage = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
-        if (imageFile) {
+        if (imageFile.length > 0) {
             await handleImageUpload();
         } else if (editMessage) {
             await updateMessage();

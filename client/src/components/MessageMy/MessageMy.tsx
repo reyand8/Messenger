@@ -16,7 +16,8 @@ import {BASE_URL} from "../../constants/apiUrl";
  *
  * @returns {JSX.Element} The MessageMy component.
  */
-const MessageMy: React.FC<IMessageMyProps> = ({message, setEditMessage, currRoom, socket}) => {
+const MessageMy: React.FC<IMessageMyProps> = (
+    {message, setEditMessage, currRoom, socket}) => {
     const { id, text,  createdAt, imagePaths } = message[0];
 
     /**
@@ -51,8 +52,8 @@ const MessageMy: React.FC<IMessageMyProps> = ({message, setEditMessage, currRoom
                     <div className="flex items-center flex-row-reverse group">
                         {imagePaths
                             ?
-                            imagePaths.map((img) => (
-                                <img src={`${BASE_URL}/${img}`} className="w-36" alt=""/>
+                            imagePaths.map((img: string, index: number) => (
+                                <img src={`${BASE_URL}/${img}`} key={index} className="w-36" alt=""/>
                             ))
                             :
                             <p className="rounded-t-full rounded-l-full bg-blue-700 px-6 py-3 max-w-xs lg:max-w-md">

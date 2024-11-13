@@ -23,8 +23,8 @@ const MessageFriend: React.FC<IMessageFriendProps> = ({message}) => {
                     <div className="flex items-center group">
                         {imagePaths
                             ?
-                            imagePaths.map((img) => (
-                                <img src={`${BASE_URL}/${img}`} className="w-36" alt=""/>
+                            imagePaths.map((img: string, index: number) => (
+                                <img src={`${BASE_URL}/${img}`} key={index} className="w-36" alt=""/>
                             ))
                             :
                             <p className="
