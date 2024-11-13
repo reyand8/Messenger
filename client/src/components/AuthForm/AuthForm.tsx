@@ -59,23 +59,23 @@ const AuthForm: React.FC<IAuthFormProps> = ({ setToken }) => {
 
     return (
         <div className="
-            w-full bg-white rounded-lg shadow
+            w-full rounded-lg shadow
             dark:border md:mt-0 sm:max-w-md xl:p-0
-            dark:bg-gray-800 dark:border-gray-700"
+            bg-gray-800 border-gray-700"
         >
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 {isRegister ?
                     <h1 className="
                     text-xl font-bold leading-tight
-                    tracking-tight text-gray-900 md:text-2xl
-                    dark:text-white"
+                    tracking-tight  md:text-2xl
+                    text-white"
                     >
                       Registration
                     </h1>
                     :
                     <h1 className="
                     text-xl font-bold leading-tight tracking-tight
-                    text-gray-900 md:text-2xl dark:text-white"
+                    md:text-2xl text-white"
                     >
                          Login
                     </h1>
@@ -135,20 +135,20 @@ const AuthForm: React.FC<IAuthFormProps> = ({ setToken }) => {
                         </Button>
                     </div>
                     <button type="button" onClick={() => setIsRegister(!isRegister)}
-                        className="text-sm font-light text-gray-500 dark:text-gray-400">
+                        className="text-sm font-light text-gray-400">
                         {isRegister ?
                             <div className="flex mb-4 ml-3">
-                                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                                <p className="text-sm font-light text-gray-400">
                                     Already have an account?
                                 </p>
-                                <p className="font-medium text-primary-600 hover:underline dark:text-primary-500 pl-2">
+                                <p className="font-medium hover:underline text-primary-500 pl-2">
                                     Login
                                 </p>
                             </div>
                             :
                             <div className="flex mb-4 ml-3">
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">No account?</p>
-                                <p className="font-medium text-primary-600 hover:underline dark:text-primary-500 pl-2">
+                                <p className="font-medium hover:underline text-primary-500 pl-2">
                                     Register
                                 </p>
                             </div>
