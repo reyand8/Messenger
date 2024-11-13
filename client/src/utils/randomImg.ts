@@ -1,15 +1,18 @@
-const contacts: string[] = [
-    'https://randomuser.me/api/portraits/women/33.jpg',
-    'https://randomuser.me/api/portraits/women/23.jpg',
-    'https://randomuser.me/api/portraits/women/30.jpg',
-    'https://randomuser.me/api/portraits/women/39.jpg',
-    'https://randomuser.me/api/portraits/women/20.jpg',
+import Men1 from '../assets/people/Men1.jpg';
+import Men2 from '../assets/people/Men2.jpg';
+import Men3 from '../assets/people/Men3.jpg';
 
-    'https://randomuser.me/api/portraits/men/23.jpg',
-    'https://randomuser.me/api/portraits/men/16.jpg',
-    'https://randomuser.me/api/portraits/men/20.jpg',
-    'https://randomuser.me/api/portraits/men/17.jpg',
-    'https://randomuser.me/api/portraits/men/14.jpg',
+import Women1 from '../assets/people/Women1.jpg';
+import Women2 from '../assets/people/Women2.jpg';
+import Women3 from '../assets/people/Women3.jpg';
+
+const contacts: string[] = [
+    Men1,
+    Men2,
+    Men3,
+    Women1,
+    Women2,
+    Women3,
 ];
 
 function getRandomContact(): string {
