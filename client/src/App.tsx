@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 
 import AuthForm from './components/AuthForm/AuthForm';
 import ChatMain from './components/ChatMain/ChatMain';
-import {verifyToken} from './api/authApi';
-import {IUser} from './types/user/user.interface';
 
 /**
  * The main App component handles authentication and displays the chat interface.

@@ -28,7 +28,7 @@ const ChatMain: React.FC<IChatMainProps> = ({setToken}) => {
             }
         };
         fetchUserData();
-    }, []);
+    }, [setToken]);
 
     return (
         <div className="flex flex-1 flex-col">
