@@ -52,9 +52,6 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
         user.username.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    if (!currUser) {
-        window.location.reload();
-    }
 
     return (
         <section
