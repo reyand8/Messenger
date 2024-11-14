@@ -72,10 +72,10 @@ export const createMessage = async (req: Request, res: Response): Promise<void> 
 export const editMessage = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
-        const { text } = req.body;
+        const { text } = req.body || {};
 
         if (!text) {
-            res.status(400).json({ message: 'Text is required' });
+            res.status(404).json({ message: 'Text is required' });
             return;
         }
 
