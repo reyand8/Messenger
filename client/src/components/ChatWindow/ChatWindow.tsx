@@ -48,8 +48,8 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
 
         const loadMessages = async (): Promise<void> => {
             try {
-                if (currUserToken && currUserId && currSelectedFriend) {
-                    const fetchedMessages = await fetchMessages(currSelectedFriend, currUserId, currUserToken);
+                if (currUserId && currSelectedFriend) {
+                    const fetchedMessages = await fetchMessages(currSelectedFriend, currUserId);
                     setMessages(fetchedMessages);
                 }
             } catch (error) {
@@ -143,7 +143,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
             try {
                 if (currUserId && currSelectedFriend) {
                     const imageData =
-                        await uploadImage(currUserId, currSelectedFriend, formData, currUserToken);
+                        await uploadImage(currUserId, currSelectedFriend, formData);
                     setImageFile([]);
                     const messageData = {
                         receiverId: currRoom.toString(),
@@ -165,8 +165,8 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
      */
     const createNewMessage = async (): Promise<void> => {
         try {
-            if (currUserToken && currUserId && currSelectedFriend) {
-                const newMessage = await sendMessage(currUserId, currSelectedFriend, message, currUserToken);
+            if (currUserToken && currUserId && currSelectedFriend && message) {
+                const newMessage = await sendMessage(currUserId, currSelectedFriend, message);
                 const messageData = {
                     receiverId: currRoom.toString(),
                     message: newMessage,
@@ -187,7 +187,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         if (!editMessage) return;
         try {
             if (currUserToken && currUserId && currSelectedFriend) {
-                const updatedMessage = await editMyMessage(editMessage.id, editMessage.text, currUserToken);
+                const updatedMessage = await editMyMessage(editMessage.id, editMessage.text);
                 const messageData = {
                     receiverId: currRoom.toString(),
                     message: updatedMessage.data,
