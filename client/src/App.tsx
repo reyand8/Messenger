@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import AuthForm from './components/AuthForm/AuthForm';
 import ChatMain from './components/ChatMain/ChatMain';
@@ -15,6 +15,14 @@ import ChatMain from './components/ChatMain/ChatMain';
  */
 const App: React.FC = () => {
     const [token, setToken] = useState<string | null>(null);
+
+    useEffect(() => {
+        const localStorageToken: string | null = localStorage.getItem('token');
+        if (localStorageToken) {
+            setToken(localStorageToken);
+        }
+    }, []);
+
     return (
         <>
             {
