@@ -52,6 +52,10 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
         user.username.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    if (!currUser) {
+        window.location.reload();
+    }
+
     return (
         <section
             className="flex flex-col flex-none w-24 group lg:max-w-sm md:w-2/5">
