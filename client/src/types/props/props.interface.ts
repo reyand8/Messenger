@@ -21,7 +21,7 @@ export interface IChatListProps {
 }
 
 export interface IChatMainProps {
-    currUser: ICurrUser | null;
+    setToken: (token: string) => void;
 }
 
 export interface IChatSavedItemProps {
