@@ -4,13 +4,13 @@ import { Request, Response } from 'express';
 
 jest.mock('../models/User');
 
-describe('User Controller', () => {
+describe('User Controller', (): void => {
     let req: Partial<Request>;
     let res: Partial<Response>;
     let jsonMock: jest.Mock;
     let statusMock: jest.Mock;
 
-    beforeEach(() => {
+    beforeEach((): void => {
         jsonMock = jest.fn();
         statusMock = jest.fn().mockReturnValue({ json: jsonMock });
 
@@ -23,8 +23,8 @@ describe('User Controller', () => {
         jest.clearAllMocks();
     });
 
-    describe('getUsers', () => {
-        it('should return a list of users', async () => {
+    describe('getUsers', (): void => {
+        it('should return a list of users', async (): Promise<void> => {
 
             const mockUsers = [
                 { id: 1, username: 'user one' },
@@ -41,7 +41,7 @@ describe('User Controller', () => {
             expect(jsonMock).toHaveBeenCalledWith(mockUsers);
         });
 
-        it('should return a database error', async () => {
+        it('should return a database error', async (): Promise<void> => {
             const errorMessage = new Error('Database error');
             (User.findAll as jest.Mock).mockRejectedValue(errorMessage);
 

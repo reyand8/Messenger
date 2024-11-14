@@ -7,7 +7,7 @@ import { Message, User } from '../models/User';
 jest.mock('../models/User');
 
 
-describe('messageController', () => {
+describe('messageController', (): void => {
     let req: Partial<Request>;
     let res: Partial<Response>;
     let jsonMock: jest.Mock;
@@ -26,7 +26,7 @@ describe('messageController', () => {
         jest.clearAllMocks();
     });
 
-    describe('getMessages', () => {
+    describe('getMessages', (): void => {
         it('should return all messages between two users', async () => {
             req.params = { senderId: '1', receiverId: '2' };
             const mockMessages = [{ id: 1, text: 'Hello', senderId: '1', receiverId: '2' }];
@@ -52,7 +52,7 @@ describe('messageController', () => {
     });
 
     describe('createMessage', () => {
-        it('should create a new message', async () => {
+        it('should create a new message', async (): Promise<void> => {
             req.body = { senderId: '1', receiverId: '2', text: 'Hello' };
             const mockMessage = { id: 1, text: 'Hello', senderId: '1', receiverId: '2' };
             (Message.create as jest.Mock).mockResolvedValue(mockMessage);
@@ -65,7 +65,7 @@ describe('messageController', () => {
     });
 
     describe('editMessage', () => {
-        it('should edit an existing message', async () => {
+        it('should edit an existing message', async (): Promise<void> => {
             req.params = { id: '1' };
             req.body = { text: 'New text' };
             const mockMessage = { id: 1, text: 'Hello', save: jest.fn() };
@@ -78,7 +78,7 @@ describe('messageController', () => {
             expect(jsonMock).toHaveBeenCalledWith({ message: 'Your message was updated', data: mockMessage });
         });
 
-        it('should return error if message is not found', async () => {
+        it('should return error if message is not found', async (): Promise<void> => {
             req.params = { id: '1' };
             (Message.findByPk as jest.Mock).mockResolvedValue(null);
 
@@ -90,7 +90,7 @@ describe('messageController', () => {
     });
 
     describe('deleteMessage', () => {
-        it('should delete a message', async () => {
+        it('should delete a message', async (): Promise<void> => {
             req.params = { id: '1' };
             const mockMessage = { id: 1, destroy: jest.fn() };
             (Message.findByPk as jest.Mock).mockResolvedValue(mockMessage);
@@ -101,7 +101,7 @@ describe('messageController', () => {
             expect(jsonMock).toHaveBeenCalledWith({ message: 'Your message was deleted' });
         });
 
-        it('should return error if message was not found', async () => {
+        it('should return error if message was not found', async (): Promise<void> => {
             req.params = { id: '1' };
             (Message.findByPk as jest.Mock).mockResolvedValue(null);
 
@@ -113,7 +113,7 @@ describe('messageController', () => {
     });
 
     describe('uploadFiles', () => {
-        it('should upload files', async () => {
+        it('should upload files', async (): Promise<void> => {
             req.body = { senderId: '1', receiverId: '2', text: 'Hello' };
             req.files = [{ path: 'path/to/image1' }, { path: 'path/to/image2' }] as any;
 
