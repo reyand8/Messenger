@@ -13,7 +13,6 @@ export type IUserList = IUser[];
 export const fetchAllUsers = async (): Promise<IUserList | null> => {
     try {
         const response = await axios.get(`${API_USERS_URL}/allUsers`);
-        console.log(response.data);
         return response.data as IUserList;
     } catch (err) {
         console.error(err);
