@@ -29,7 +29,9 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
             setIsLoading(true);
             try {
                 const response = await fetchAllUsers();
-                setAllUsers(response);
+                if (response) {
+                    setAllUsers(response);
+                }
             } catch (error: any) {
                 setIsError(true);
                 console.error('Error:', error);

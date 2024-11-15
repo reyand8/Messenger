@@ -12,3 +12,7 @@ export interface ISelectedFriend {
     id: string;
     username: string;
 }
+
+export interface IAllUsers {
+    data: IUser[]
+}

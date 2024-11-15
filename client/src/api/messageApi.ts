@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import {API_MESSAGES_URL} from '../constants/apiUrl';
+import {IDeleteMessage, IEditMessage, IFetchMessage, ISendMessage} from '../types/message/message.interface';
 
 
 const api = axios.create({
@@ -38,82 +39,103 @@ api.interceptors.response.use(
 /**
  * Fetches messages between two users by sending a GET request to the server.
  *
- * @param {string} receiverId - The ID of the receiver user.
- * @param {string} senderId - The ID of the sender user.
+ * @param {string} receiverId - The ID of the user receiving the messages.
+ * @param {string} senderId - The ID of the user sending the messages.
  *
- * @returns {Promise<any>} The response data from the server (usually an array of messages).
+ * @returns {Promise<IFetchMessage[]>} A promise that resolves to an array of messages or an empty array in case of an error.
  */
-export const fetchMessages = async (receiverId: string, senderId: string): Promise<any> => {
-    const response = await api.get(`/${senderId}/${receiverId}/`);
-    return response.data;
+export const fetchMessages = async (receiverId: string, senderId: string): Promise<IFetchMessage[]> => {
+    try {
+        const response = await api.get(`/${senderId}/${receiverId}/`);
+        return (response.data as IFetchMessage[]) || [];
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+        return [];
+    }
 };
 
 /**
  * Sends a message from one user to another by sending a POST request to the server.
  *
- * @param {string} senderId - The ID of the sender user.
- * @param {string} receiverId - The ID of the receiver user.
- * @param {string} text - The content of the message.
+ * @param {string} senderId - The ID of the user sending the message.
+ * @param {string} receiverId - The ID of the user receiving the message.
+ * @param {string} text - The content of the message to send.
  *
- * @returns {Promise<any>} The response data from the server (usually the created message).
+ * @returns {Promise<ISendMessage | null>} A promise that resolves to the created message or `null` in case of an error.
  */
-export const sendMessage = async (senderId: string, receiverId: string, text: string): Promise<any> => {
-    const newMessage = {
-        senderId,
-        receiverId,
-        text
-    };
-    const response = await api.post('', newMessage);
-    return response.data;
+export const sendMessage = async (senderId: string, receiverId: string, text: string): Promise<ISendMessage | null> => {
+    try {
+        const newMessage = {senderId, receiverId, text };
+        const response = await api.post('', newMessage);
+        return response.data as ISendMessage;
+    } catch (error) {
+        console.error('Error sending message:', error);
+        return null;
+    }
 };
 
-
 /**
- * Deletes a message by sending a POST request to the server to delete it.
+ * Deletes a message by sending a request to the server.
  *
  * @param {number} id - The ID of the message to delete.
  *
- * @returns {Promise<any>} The response data from the server (usually a success message).
+ * @returns {Promise<IDeleteMessage>} A promise that resolves to the server's response or an error message.
  */
-export const deleteMessage = async (id: number): Promise<any> => {
-    const response = await api.post(`/delete/${id}`);
-    return response.data;
+export const deleteMessage = async (id: number): Promise<IDeleteMessage> => {
+    try {
+        const response = await api.post(`/delete/${id}`);
+        if (response.data) {
+            return response.data as IDeleteMessage;
+        }
+        return { message: 'No data returned' };
+    } catch (error) {
+        console.error('Error deleting message:', error);
+        return { message: 'Error deleting message' };
+    }
 };
 
 /**
- * Edits an existing message by sending a POST request to the server with the updated content.
+ * Edits an existing message by sending updated content to the server.
  *
  * @param {number} id - The ID of the message to edit.
- * @param {string} text - The new content for the message.
+ * @param {string} text - The new content of the message.
  *
- * @returns {Promise<any>} The response data from the server (usually the edited message).
+ * @returns {Promise<IEditMessage | null>} A promise that resolves to the updated message or `null` in case of an error.
  */
-export const editMyMessage = async (id: number, text: string): Promise<any> => {
-    const editedMessage = {
-        text
-    };
-    const response = await api.post(`/edit/${id}`, editedMessage);
-    return response.data;
+export const editMyMessage = async (id: number, text: string): Promise<IEditMessage | null> => {
+    try {
+        const editedMessage = { text };
+        const response = await api.post(`/edit/${id}`, editedMessage);
+        return response.data as IEditMessage;
+    } catch (error) {
+        console.error('Error editing message:', error);
+        return null;
+    }
 };
 
 
 /**
- * Uploads an image as part of a message by sending a POST request to the server with the image data.
+ * Uploads an image as part of a message by sending the image data to the server.
  *
- * @param {string} senderId - The ID of the sender user.
- * @param {string} receiverId - The ID of the receiver user.
- * @param {FormData} formData - The FormData object containing the image and other message details.
+ * @param {string} senderId - The ID of the user sending the image.
+ * @param {string} receiverId - The ID of the user receiving the image.
+ * @param {FormData} formData - The FormData object containing the image file and metadata.
  *
- * @returns {Promise<any>} The response data from the server (usually the uploaded image or message).
+ * @returns {Promise<ISendMessage | null>} A promise that resolves to the uploaded image's response or `null` in case of an error.
  */
-export const uploadImage = async (senderId: string, receiverId: string, formData: FormData): Promise<any> => {
-    formData.append('senderId', senderId);
-    formData.append('receiverId', receiverId);
-    formData.append('text', '');
-    const response = await api.post('/upload', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        }
-    });
-    return response.data;
+export const uploadImage = async (senderId: string, receiverId: string, formData: FormData): Promise<ISendMessage | null> => {
+    try {
+        formData.append('senderId', senderId);
+        formData.append('receiverId', receiverId);
+        formData.append('text', '');
+        const response = await api.post('/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+        return response.data as ISendMessage;
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        return null;
+    }
 };

@@ -47,8 +47,10 @@ const AuthForm: React.FC<IAuthFormProps> = ({ setToken }) => {
             const response = isRegister
                 ? await register(data.username, data.email, data.password)
                 : await login(data.email, data.password);
-            localStorage.setItem('token', response.token);
-            setToken(response.token);
+            if (response?.token) {
+                localStorage.setItem('token', response.token);
+                setToken(response.token);
+            }
         } catch (error: any) {
             setError('Authentication error. Please try again.');
             console.error('Authentication error:', error);

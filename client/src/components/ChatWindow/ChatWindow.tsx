@@ -50,7 +50,9 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
             try {
                 if (currUserId && currSelectedFriend) {
                     const fetchedMessages = await fetchMessages(currSelectedFriend, currUserId);
-                    setMessages(fetchedMessages);
+                    if (fetchedMessages) {
+                        setMessages(fetchedMessages);
+                    }
                 }
             } catch (error) {
                 console.error(error);
@@ -144,15 +146,17 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                 if (currUserId && currSelectedFriend) {
                     const imageData =
                         await uploadImage(currUserId, currSelectedFriend, formData);
-                    setImageFile([]);
-                    const messageData = {
-                        receiverId: currRoom.toString(),
-                        message: imageData,
-                    };
-                    socket.emit('sendMessage', messageData);
-                    setMessages((prevMessages: IMessage[]) => [...prevMessages, imageData]);
-                    setImageFile([]);
-                    setMessage('');
+                    if (imageData) {
+                        setImageFile([]);
+                        const messageData = {
+                            receiverId: currRoom.toString(),
+                            message: imageData,
+                        };
+                        socket.emit('sendMessage', messageData);
+                        setMessages((prevMessages: IMessage[]) => [...prevMessages, imageData]);
+                        setImageFile([]);
+                        setMessage('');
+                    }
                 }
             } catch (error) {
                 console.error('Image upload error', error);
@@ -172,8 +176,10 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                     message: newMessage,
                 };
                 socket.emit('sendMessage', messageData);
-                setMessages((prevMessages: IMessage[]) => [...prevMessages, newMessage]);
-                setMessage('');
+                if (newMessage) {
+                    setMessages((prevMessages: IMessage[]) => [...prevMessages, newMessage]);
+                    setMessage('');
+                }
             }
         } catch (error) {
             console.error('Create message error', error);
@@ -188,15 +194,17 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         try {
             if (currUserToken && currUserId && currSelectedFriend) {
                 const updatedMessage = await editMyMessage(editMessage.id, editMessage.text);
-                const messageData = {
-                    receiverId: currRoom.toString(),
-                    message: updatedMessage.data,
-                };
-                socket.emit('updateMessage', messageData);
-                setMessages((prevMessages: IMessage[]) =>
-                    prevMessages.map((msg: IMessage) => (msg.id === updatedMessage.data.id ? updatedMessage.data : msg))
-                );
-                setEditMessage(null);
+                if (updatedMessage) {
+                    const messageData = {
+                        receiverId: currRoom.toString(),
+                        message: updatedMessage?.data,
+                    };
+                    socket.emit('updateMessage', messageData);
+                    setMessages((prevMessages: IMessage[]) =>
+                        prevMessages.map((msg: IMessage) => (msg.id === updatedMessage.data.id ? updatedMessage.data : msg))
+                    );
+                    setEditMessage(null);
+                }
             }
         } catch (error) {
             console.error('Update message error', error);
