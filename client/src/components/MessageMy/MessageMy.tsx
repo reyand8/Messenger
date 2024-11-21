@@ -27,11 +27,11 @@ const MessageMy: React.FC<IMessageMyProps> = (
      *
      * @returns {Promise<void>} Resolves when the message is deleted and socket event is emitted.
      */
-    const handleDeleteMessage = async (idMsg: number) => {
+    const handleDeleteMessage = async (idMsg: number): Promise<void> => {
         try {
             if (idMsg) {
                 await deleteMessage(idMsg);
-                const messageData = {
+                const messageData: {receiverId: string, idMsg: number} = {
                     receiverId: currRoom.toString(),
                     idMsg: idMsg,
                 };

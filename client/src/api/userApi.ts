@@ -8,7 +8,8 @@ export type IUserList = IUser[];
 /**
  * Fetches all users from the server by sending a GET request.
  *
- * @returns {Promise<any>} The response data from the server, usually an array of users.
+ * @returns {Promise<IUserList | null>} A promise that resolves to an array of users if the request is successful,
+ * or null if an error occurs during the request.
  */
 export const fetchAllUsers = async (): Promise<IUserList | null> => {
     try {

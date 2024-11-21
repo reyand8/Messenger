@@ -7,7 +7,7 @@ import StartConversation from '../Status/StartConversation/StartConversation';
 import SavedMessages from '../../assets/SavedMessages.jpg';
 import {IChatWindowProps} from '../../types/props/props.interface';
 import {editMyMessage, fetchMessages, sendMessage, uploadImage} from '../../api/messageApi';
-import {IMessage} from '../../types/message/message.interface';
+import {IEditMessage, IFetchMessage, IMessage, ISendMessage} from '../../types/message/message.interface';
 import {calculateRoom} from '../../utils/createRoom';
 import AddedImage from '../../assets/AddedImage.svg';
 import SendBtn from '../../assets/SendBtn.svg';
@@ -49,7 +49,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         const loadMessages = async (): Promise<void> => {
             try {
                 if (currUserId && currSelectedFriend) {
-                    const fetchedMessages = await fetchMessages(currSelectedFriend, currUserId);
+                    const fetchedMessages: IFetchMessage[] = await fetchMessages(currSelectedFriend, currUserId);
                     if (fetchedMessages) {
                         setMessages(fetchedMessages);
                     }
@@ -62,7 +62,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         loadMessages();
 
         socket.on('newMessage', (newMessage: IMessage) => {
-            setMessages((prevMessages) => {
+            setMessages((prevMessages: IMessage[]): IMessage[] => {
                 const existingMessage: IMessage | undefined =
                     prevMessages.find((msg: IMessage): boolean => msg.id === newMessage.id);
                 if (existingMessage) {
@@ -75,7 +75,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         });
 
         socket.on('deleteMessage', (idMsg: number) => {
-            setMessages((prevMessages) => {
+            setMessages((prevMessages: IMessage[]): IMessage[] => {
                 if (idMsg) {
                     return prevMessages.filter((msg: IMessage): boolean =>
                         msg.id !== idMsg
@@ -95,7 +95,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
      *
      * @param {React.ChangeEvent<HTMLInputElement>} e - the file input change event
      */
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (e.target.files) {
             setImageFile(Array.from(e.target.files));
         }
@@ -136,7 +136,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
     /**
      * Handles image upload
      */
-    const handleImageUpload = async () => {
+    const handleImageUpload = async (): Promise<void> => {
         if (imageFile && currUserToken) {
             const formData = new FormData();
             imageFile.forEach((file) => {
@@ -144,7 +144,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
             });
             try {
                 if (currUserId && currSelectedFriend) {
-                    const imageData =
+                    const imageData: ISendMessage | null =
                         await uploadImage(currUserId, currSelectedFriend, formData);
                     if (imageData) {
                         setImageFile([]);
@@ -170,7 +170,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
     const createNewMessage = async (): Promise<void> => {
         try {
             if (currUserToken && currUserId && currSelectedFriend && message) {
-                const newMessage = await sendMessage(currUserId, currSelectedFriend, message);
+                const newMessage: ISendMessage | null = await sendMessage(currUserId, currSelectedFriend, message);
                 const messageData = {
                     receiverId: currRoom.toString(),
                     message: newMessage,
@@ -193,7 +193,7 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
         if (!editMessage) return;
         try {
             if (currUserToken && currUserId && currSelectedFriend) {
-                const updatedMessage = await editMyMessage(editMessage.id, editMessage.text);
+                const updatedMessage: IEditMessage | null = await editMyMessage(editMessage.id, editMessage.text);
                 if (updatedMessage) {
                     const messageData = {
                         receiverId: currRoom.toString(),
@@ -201,7 +201,8 @@ const ChatWindow: React.FC<IChatWindowProps> = ({currUser, selectedFriend}) => {
                     };
                     socket.emit('updateMessage', messageData);
                     setMessages((prevMessages: IMessage[]) =>
-                        prevMessages.map((msg: IMessage) => (msg.id === updatedMessage.data.id ? updatedMessage.data : msg))
+                        prevMessages.map((msg: IMessage): ISendMessage =>
+                            (msg.id === updatedMessage.data.id ? updatedMessage.data : msg))
                     );
                     setEditMessage(null);
                 }

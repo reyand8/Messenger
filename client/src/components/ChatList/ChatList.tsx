@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {fetchAllUsers} from '../../api/userApi';
+import {fetchAllUsers, IUserList} from '../../api/userApi';
 import ErrorMsg from '../Status/ErrorMsg/ErrorMsg';
 import LoadingMsg from '../Status/LoadingMsg/LoadingMsg';
 import ChatItem from '../ChatItem/ChatItem';
@@ -28,7 +28,7 @@ const ChatList: React.FC<IChatListProps> = ({currUser, setSelectedFriend}) => {
         const getAllUsers = async () => {
             setIsLoading(true);
             try {
-                const response = await fetchAllUsers();
+                const response: IUserList | null = await fetchAllUsers();
                 if (response) {
                     setAllUsers(response);
                 }

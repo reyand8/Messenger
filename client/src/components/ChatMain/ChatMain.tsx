@@ -5,6 +5,7 @@ import ChatWindow from '../ChatWindow/ChatWindow';
 import {ISelectedFriend, IUser} from '../../types/user/user.interface';
 import {verifyToken} from '../../api/authApi';
 import {IChatMainProps} from '../../types/props/props.interface';
+import {IVerifyToken} from "../../types/auth/auth.interface";
 
 
 const ChatMain: React.FC<IChatMainProps> = ({setToken}) => {
@@ -14,12 +15,12 @@ const ChatMain: React.FC<IChatMainProps> = ({setToken}) => {
 
 
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchUserData = async (): Promise<void> => {
             const storedToken = localStorage.getItem('token');
             if (storedToken) {
                 setToken(storedToken);
                 try {
-                    const user = await verifyToken(storedToken);
+                    const user: IVerifyToken | null = await verifyToken(storedToken);
                     setUserData(user);
                 } catch (error: any) {
                     console.error(error.message);
