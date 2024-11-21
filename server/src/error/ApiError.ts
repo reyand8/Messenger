@@ -13,8 +13,4 @@ const internal = (message: string): IApiError => {
     return ApiError(500, message);
 };
 
-const forbidden = (message: string): IApiError => {
-    return ApiError(403, message);
-};
-
-export { ApiError, badRequest, internal, forbidden };
+export { ApiError, badRequest, internal };
