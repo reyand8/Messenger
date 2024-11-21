@@ -79,7 +79,7 @@ export const editMessage = async (req: Request, res: Response): Promise<void> =>
             return;
         }
 
-        const message = await Message.findByPk(id);
+        const message: Message | null = await Message.findByPk(id);
         if (!message) {
             res.status(404).json({ message: 'Message was not found' });
             return;
@@ -141,7 +141,7 @@ export const uploadFiles = async (req: Request, res: Response): Promise<void> =>
         }
         const { senderId, receiverId, text } = req.body;
         const files = req.files as Express.Multer.File[];
-        const imagePaths = files.map(file => file.path);
+        const imagePaths: string[] = files.map(file => file.path);
 
         const message: Message = await Message.create({
             senderId,

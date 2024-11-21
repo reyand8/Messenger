@@ -56,7 +56,7 @@ export const register = async (req: Request, res: Response, next: NextFunction):
         const hashPassword: string = await bcrypt.hash(password, 5);
         const user: User = await User.create({ email, username, password: hashPassword });
 
-        const token = generateJwt(user.id, user.email, user.username);
+        const token: string = generateJwt(user.id, user.email, user.username);
         return res.json({ token });
     } catch (error) {
         return next(error);
@@ -79,7 +79,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
         if (!user) {
             return next(internal('The user was not found'));
         }
-        const comparePassword = bcrypt.compareSync(password, user.password);
+        const comparePassword: boolean = bcrypt.compareSync(password, user.password);
         if (!comparePassword) {
             return next(internal('Incorrect password'));
         }
