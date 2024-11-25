@@ -5,7 +5,7 @@ import ChatWindow from '../ChatWindow/ChatWindow';
 import {ISelectedFriend, IUser} from '../../types/user/user.interface';
 import {verifyToken} from '../../api/authApi';
 import {IChatMainProps} from '../../types/props/props.interface';
-import {IVerifyToken} from "../../types/auth/auth.interface";
+import {IVerifyToken} from '../../types/auth/auth.interface';
 
 
 const ChatMain: React.FC<IChatMainProps> = ({setToken}) => {
