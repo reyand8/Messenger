@@ -17,13 +17,13 @@ dotenv.config();
 
 const app = express();
 
+const ORIGIN_URL: string = 'http://localhost:3000';
+
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ORIGIN_URL,
     methods: ['GET', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use((req, res, next) => {
     req.io = io;
@@ -34,6 +34,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 const server = http.createServer(app);
 
@@ -41,7 +42,7 @@ const PORT: string | 5001 = process.env.PORT || 5001;
 
 const io = new Server(server, {
     cors: {
-        origin: '*',
+        origin: ORIGIN_URL,
         methods: ['GET', 'POST', 'DELETE']
     }
 });
