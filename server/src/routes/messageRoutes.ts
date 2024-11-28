@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Router} from 'express';
 
 import {getMessages, createMessage, deleteMessage, editMessage, uploadFiles}
     from '../controllers/messageController';
@@ -6,7 +6,7 @@ import {uploadFilesMiddleware}
     from '../middleware/uploadMiddleware';
 
 
-const router = express.Router();
+const router: Router = express.Router();
 
 router.get('/:senderId/:receiverId', getMessages);
 router.post('/delete/:id', deleteMessage);

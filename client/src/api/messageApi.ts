@@ -123,7 +123,8 @@ export const editMyMessage = async (id: number, text: string): Promise<IEditMess
  *
  * @returns {Promise<ISendMessage | null>} A promise that resolves to the uploaded image's response or `null` in case of an error.
  */
-export const uploadImage = async (senderId: string, receiverId: string, formData: FormData): Promise<ISendMessage | null> => {
+export const uploadImage =
+    async (senderId: string, receiverId: string, formData: FormData): Promise<ISendMessage | null> => {
     try {
         formData.append('senderId', senderId);
         formData.append('receiverId', receiverId);

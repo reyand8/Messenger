@@ -8,13 +8,13 @@ dotenv.config();
 
 const requiredEnvData: string[] = ['DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'PORT'];
 
-requiredEnvData.forEach((envData: string) => {
+requiredEnvData.forEach((envData: string): void => {
     if (!process.env[envData]) {
         throw new Error(`Missing required env variable: ${envData}`);
     }
 });
 
-const sequelize = new Sequelize(
+const sequelize: Sequelize = new Sequelize(
     process.env.DB_NAME as string,
     process.env.DB_USER as string,
     process.env.DB_PASSWORD as string,

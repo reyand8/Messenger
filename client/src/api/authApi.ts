@@ -34,7 +34,8 @@ const postRequest = async <T>(url: string, data: object): Promise<T | null> => {
 export const register = async (
     username: string, email: string, password: string
 ): Promise<IAuthResponse | null> => {
-    const data = await postRequest<IAuthResponse>(`${API_AUTH_URL}/register`, { username, email, password });
+    const data: IAuthResponse | null =
+        await postRequest<IAuthResponse>(`${API_AUTH_URL}/register`, { username, email, password });
     return data?.token ? data : null;
 };
 
@@ -49,7 +50,8 @@ export const register = async (
 export const login = async (
     email: string, password: string
 ): Promise<IAuthResponse | null> => {
-    const data = await postRequest<IAuthResponse>(`${API_AUTH_URL}/login`, { email, password });
+    const data: IAuthResponse | null =
+        await postRequest<IAuthResponse>(`${API_AUTH_URL}/login`, { email, password });
     return data?.token ? data : null;
 };
 
@@ -63,6 +65,7 @@ export const login = async (
 export const verifyToken = async (
     token: string
 ): Promise<IVerifyToken | null> => {
-    const data = await postRequest<IVerifyToken>(`${API_AUTH_URL}/verifyToken`, { token });
+    const data: IVerifyToken | null =
+        await postRequest<IVerifyToken>(`${API_AUTH_URL}/verifyToken`, { token });
     return data && data.username && data.email && data.id ? data : null;
 };

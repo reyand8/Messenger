@@ -51,7 +51,7 @@ export const getMessages = async (req: Request, res: Response): Promise<void> =>
 export const createMessage = async (req: Request, res: Response): Promise<void> => {
     try {
         const { receiverId, senderId, text } = req.body;
-        const message = await Message.create({ senderId, receiverId, text });
+        const message: Message = await Message.create({ senderId, receiverId, text });
         res.json(message);
     } catch (error) {
         console.log(error);
